@@ -1,33 +1,37 @@
-@extends('layouts.layout')
+ @extends('layouts.layout')
+
 @section('content')
+@section('panel_name','Agremiado')
+@section('panel_rigth','Agremiado')
 <div class="row">
   <section class="content">
-    <div class="col-md-12 col-xs-4">
+    <div class="col-md-12 col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="panel-heading">
           <div class="panel-tittle">
           <div class=""><h3>Lista Agremiado</h3></div>
+           <!-- <a href="{{ ('app.excel.download') }}" class="btn btn-primary" id="btnDescargar" style="padding:4px 10px;">Descargar Plantilla</a> -->
+             </div>
+
         </div>
+
         </div>
           <div class="pull-right">
             <div class="btn-group">
+
               <a title="Nuevo Registro" href="{{ route('agremiado.create') }}" class="btn btn-info" >Agregar Agremiado</a> 
             </div>
-<!--                <form class="form-inline">
-              <input type="text" name="" placeholder="Buscar" class="form-control rm-sm-2">
-              <button class="btn btn-success" type="submit">Buscar</button>
-              </form>-->
-          </div>
 
+          </div>
 
         
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Nombre y Apellido</th>
+               <th>Nombre</th>
                <th>Civ</th>
-               <th>Codigo</th>
+               <th>Trabajo</th>
                <th>Solvencia</th>
                <th>Especialidad</th>
                <th>Cedula</th>
@@ -37,13 +41,13 @@
              <tbody>
               @if($agremiados->count())  
               @foreach($agremiados as $agremiado)  
+
               <tr>
-                <td>{{$agremiado->nombre}}</td>
+                <td>{{$agremiado->personas}}</td>
                 <td>{{$agremiado->civ}}</td>
-                <td>{{$agremiado->codigo}}</td>
+                <td>{{$agremiado->trabajo}}</td>
                 <td>{{$agremiado->solvencia}}</td>
-                <td>{{$agremiado->especialidad}}</td>
-                <td>{{$agremiado->cedula}}</td>
+                <td>{{$agremiado->especialidades}}</td>
                 <td>{{$agremiado->telefono}}</td>
                 <td>{{$agremiado->direccion}}</td>
 
@@ -74,5 +78,6 @@
     </div>
   </div>
 </section>
- 
+
+
 @endsection

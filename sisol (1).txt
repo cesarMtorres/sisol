@@ -1,0 +1,1188 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost
+-- Tiempo de generación: 08-04-2019 a las 06:08:33
+-- Versión del servidor: 5.7.25-0ubuntu0.18.04.2
+-- Versión de PHP: 7.3.1-1+ubuntu18.04.1+deb.sury.org+1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `sisol`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agremiado`
+--
+
+CREATE TABLE `agremiado` (
+  `id` int(11) NOT NULL,
+  `civ` int(10) NOT NULL,
+  `trabajo` varchar(50) NOT NULL,
+  `saldo` float NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `parroquia_id` int(11) NOT NULL,
+  `universidad_id` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `solvencia` date DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `especialidad_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `agremiado`
+--
+
+INSERT INTO `agremiado` (`id`, `civ`, `trabajo`, `saldo`, `status`, `parroquia_id`, `universidad_id`, `deleted_at`, `solvencia`, `updated_at`, `created_at`, `especialidad_id`) VALUES
+(1, 2333, 'EN MI CASA', 0, 'SOLVENTE', 2, 1, NULL, '2019-04-10', '2019-04-08 02:25:23', '2019-04-08 02:25:23', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agremiado_especialidad`
+--
+
+CREATE TABLE `agremiado_especialidad` (
+  `id` int(11) NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `especialidad_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `agremiado_especialidad`
+--
+
+INSERT INTO `agremiado_especialidad` (`id`, `agremiado_id`, `especialidad_id`, `deleted_at`, `updated_at`, `created_at`) VALUES
+(1, 1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agremiado_persona`
+--
+
+CREATE TABLE `agremiado_persona` (
+  `id` int(11) NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `persona_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agremiado_proyecto`
+--
+
+CREATE TABLE `agremiado_proyecto` (
+  `id` int(11) NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `proyecto_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `agremiado_solvencia`
+--
+
+CREATE TABLE `agremiado_solvencia` (
+  `id` int(11) NOT NULL,
+  `solvencia_id` int(11) NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auditoria`
+--
+
+CREATE TABLE `auditoria` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(20) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `transaccion_id` int(11) NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `nombre` varchar(200) NOT NULL,
+  `observacion` varchar(200) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `auditoria_plano`
+--
+
+CREATE TABLE `auditoria_plano` (
+  `id` int(11) NOT NULL,
+  `auditoria_id` int(11) NOT NULL,
+  `plano_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bitacora`
+--
+
+CREATE TABLE `bitacora` (
+  `id` int(10) NOT NULL,
+  `accion` varchar(20) NOT NULL,
+  `fecha_hora` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tabla` varchar(30) NOT NULL,
+  `usuario_id` int(10) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carga_familiar`
+--
+
+CREATE TABLE `carga_familiar` (
+  `id` int(11) NOT NULL,
+  `fecha_nac` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cepir`
+--
+
+CREATE TABLE `cepir` (
+  `id` int(11) NOT NULL,
+  `transaccion_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `configuracion`
+--
+
+CREATE TABLE `configuracion` (
+  `id` int(10) NOT NULL,
+  `nom_institucion` varchar(50) NOT NULL,
+  `logo` varchar(140) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `especialidad`
+--
+
+CREATE TABLE `especialidad` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `especialidad`
+--
+
+INSERT INTO `especialidad` (`id`, `nombre`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'ING INFORMATICA', NULL, '0000-00-00 00:00:00', '2019-04-08 00:19:11'),
+(2, 'ING CIVIL', NULL, '0000-00-00 00:00:00', '2019-04-07 23:10:17'),
+(3, 'ING ELECTRICA', NULL, '2019-04-07 22:57:42', '2019-04-07 22:57:42');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado`
+--
+
+CREATE TABLE `estado` (
+  `id` int(10) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `funcion`
+--
+
+CREATE TABLE `funcion` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `nivel` int(1) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `funcion_perfil`
+--
+
+CREATE TABLE `funcion_perfil` (
+  `funcion_id` int(11) NOT NULL,
+  `perfil_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `instituto`
+--
+
+CREATE TABLE `instituto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `instituto`
+--
+
+INSERT INTO `instituto` (`id`, `nombre`, `updated_at`, `created_at`, `deleted_at`) VALUES
+(1, 'CONSTRUC 2000', '2019-04-08 02:59:12', '0000-00-00 00:00:00', NULL),
+(2, 'CONSTRUC 200', '2019-04-06 21:38:19', '0000-00-00 00:00:00', NULL),
+(3, 'CONSTRUCTA', '2019-04-08 02:58:54', '2019-04-08 02:58:54', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2019_03_18_234444_add_plano_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `municipio`
+--
+
+CREATE TABLE `municipio` (
+  `id` int(10) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `estado_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pago`
+--
+
+CREATE TABLE `pago` (
+  `id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `referencia` varchar(20) NOT NULL,
+  `monto` float NOT NULL,
+  `nombre` varchar(30) DEFAULT NULL,
+  `agremiado_id` int(11) DEFAULT NULL,
+  `transaccion_id` int(11) DEFAULT NULL,
+  `tipo_pago_id` int(11) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `parentesco`
+--
+
+CREATE TABLE `parentesco` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `parroquia`
+--
+
+CREATE TABLE `parroquia` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `municipio_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `perfil`
+--
+
+CREATE TABLE `perfil` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `nivel` int(1) NOT NULL,
+  `status` int(1) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `persona`
+--
+
+CREATE TABLE `persona` (
+  `id` int(11) NOT NULL,
+  `cedula` int(8) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `direccion` varchar(150) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `correo` varchar(50) NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `deleted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`id`, `cedula`, `nombre`, `apellido`, `direccion`, `telefono`, `correo`, `fecha_nacimiento`, `deleted_at`, `updated_at`, `created_at`) VALUES
+(1, 25646854, 'CESAR', 'MOLINA', 'URB LA PASTORA', 412503687, 'cesar_torres_05@hotmail.com', '2019-04-03', '2019-04-06 19:09:19', '2019-04-08 03:19:32', '2019-04-08 03:19:32');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `plano`
+--
+
+CREATE TABLE `plano` (
+  `id` int(11) NOT NULL,
+  `nproyecto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `fecham` date NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `agremiado_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `plano`
+--
+
+INSERT INTO `plano` (`id`, `nproyecto`, `fecha`, `fecham`, `status`, `agremiado_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 'plaza bolivar en la urb laa pastora sector tricentenaria', '2019-03-11', '2019-03-24', 'ACTIVO', 1, NULL, NULL, '2019-04-08 03:20:38');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyecto`
+--
+
+CREATE TABLE `proyecto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `tipo_proyecto_id` int(11) NOT NULL,
+  `instituto_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solvencia`
+--
+
+CREATE TABLE `solvencia` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(11) NOT NULL,
+  `año` varchar(4) NOT NULL,
+  `mes` varchar(12) NOT NULL,
+  `transaccion_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarifa`
+--
+
+CREATE TABLE `tarifa` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `monto` float DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `fecha_ini` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tarifa`
+--
+
+INSERT INTO `tarifa` (`id`, `nombre`, `monto`, `created_at`, `updated_at`, `deleted_at`, `fecha_ini`, `fecha_fin`) VALUES
+(1, 'CEPIR', 13000, '2019-04-08 04:11:44', '2019-04-08 04:29:07', NULL, '2019-01-01', '2019-04-30'),
+(2, 'VISADO', 700, '2019-04-08 04:36:38', '2019-04-08 04:36:38', NULL, '2019-04-03', '2019-05-19');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_pago`
+--
+
+CREATE TABLE `tipo_pago` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_proyecto`
+--
+
+CREATE TABLE `tipo_proyecto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transaccion`
+--
+
+CREATE TABLE `transaccion` (
+  `id` int(10) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `monto` float NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `universidad`
+--
+
+CREATE TABLE `universidad` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `deleted_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'cesar', 'cesar_torres_05@hotmail.com', '2019-03-29 04:00:00', '$2y$10$yAhhXaq9MFAU5xyMidscvOwPtBK45TRbh8AUQb0TzlOijo0iT2T1m', NULL, '2019-03-29 04:00:00', '2019-03-29 04:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `clave` text NOT NULL,
+  `status` int(11) NOT NULL,
+  `perfil_id` int(11) NOT NULL,
+  `persona_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `visado`
+--
+
+CREATE TABLE `visado` (
+  `id` int(11) NOT NULL,
+  `transaccion_id` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `agremiado`
+--
+ALTER TABLE `agremiado`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `universidad_id` (`universidad_id`),
+  ADD KEY `parroquia_id` (`parroquia_id`),
+  ADD KEY `especialidad_id` (`especialidad_id`);
+
+--
+-- Indices de la tabla `agremiado_especialidad`
+--
+ALTER TABLE `agremiado_especialidad`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agremiado_especialidad_ibfk_1` (`agremiado_id`),
+  ADD KEY `agremiado_especialidad_ibfk_2` (`especialidad_id`);
+
+--
+-- Indices de la tabla `agremiado_persona`
+--
+ALTER TABLE `agremiado_persona`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agremiado_id` (`agremiado_id`),
+  ADD KEY `persona_id` (`persona_id`);
+
+--
+-- Indices de la tabla `agremiado_proyecto`
+--
+ALTER TABLE `agremiado_proyecto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agremiado_id` (`agremiado_id`),
+  ADD KEY `proyecto_id` (`proyecto_id`);
+
+--
+-- Indices de la tabla `agremiado_solvencia`
+--
+ALTER TABLE `agremiado_solvencia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `solvencia_id` (`solvencia_id`),
+  ADD KEY `agremiado_id` (`agremiado_id`);
+
+--
+-- Indices de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaccion_id` (`transaccion_id`),
+  ADD KEY `agremiado_id` (`agremiado_id`);
+
+--
+-- Indices de la tabla `auditoria_plano`
+--
+ALTER TABLE `auditoria_plano`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `plano_id` (`plano_id`),
+  ADD KEY `auditoria_id` (`auditoria_id`);
+
+--
+-- Indices de la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
+-- Indices de la tabla `carga_familiar`
+--
+ALTER TABLE `carga_familiar`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cepir`
+--
+ALTER TABLE `cepir`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaccion_id` (`transaccion_id`);
+
+--
+-- Indices de la tabla `configuracion`
+--
+ALTER TABLE `configuracion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `especialidad`
+--
+ALTER TABLE `especialidad`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `funcion`
+--
+ALTER TABLE `funcion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `funcion_perfil`
+--
+ALTER TABLE `funcion_perfil`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `funcion_id` (`funcion_id`),
+  ADD KEY `perfil_id` (`perfil_id`);
+
+--
+-- Indices de la tabla `instituto`
+--
+ALTER TABLE `instituto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `municipio`
+--
+ALTER TABLE `municipio`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `estado_id` (`estado_id`);
+
+--
+-- Indices de la tabla `pago`
+--
+ALTER TABLE `pago`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agremiado_id` (`agremiado_id`),
+  ADD KEY `transaccion_id` (`transaccion_id`) USING BTREE,
+  ADD KEY `tipo_pago_id` (`tipo_pago_id`);
+
+--
+-- Indices de la tabla `parentesco`
+--
+ALTER TABLE `parentesco`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `parroquia`
+--
+ALTER TABLE `parroquia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `municipio_id` (`municipio_id`);
+
+--
+-- Indices de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `persona`
+--
+ALTER TABLE `persona`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `plano`
+--
+ALTER TABLE `plano`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `agremiado_id` (`agremiado_id`);
+
+--
+-- Indices de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tipo_proyecto_id` (`tipo_proyecto_id`),
+  ADD KEY `instituto_id` (`instituto_id`);
+
+--
+-- Indices de la tabla `solvencia`
+--
+ALTER TABLE `solvencia`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaccion_id` (`transaccion_id`) USING BTREE;
+
+--
+-- Indices de la tabla `tarifa`
+--
+ALTER TABLE `tarifa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipo_pago`
+--
+ALTER TABLE `tipo_pago`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipo_proyecto`
+--
+ALTER TABLE `tipo_proyecto`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `transaccion`
+--
+ALTER TABLE `transaccion`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `universidad`
+--
+ALTER TABLE `universidad`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `persona_id` (`persona_id`),
+  ADD KEY `perfil_id` (`perfil_id`);
+
+--
+-- Indices de la tabla `visado`
+--
+ALTER TABLE `visado`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaccion_id` (`transaccion_id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `agremiado`
+--
+ALTER TABLE `agremiado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `agremiado_especialidad`
+--
+ALTER TABLE `agremiado_especialidad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `agremiado_persona`
+--
+ALTER TABLE `agremiado_persona`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `agremiado_proyecto`
+--
+ALTER TABLE `agremiado_proyecto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `agremiado_solvencia`
+--
+ALTER TABLE `agremiado_solvencia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `auditoria_plano`
+--
+ALTER TABLE `auditoria_plano`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `carga_familiar`
+--
+ALTER TABLE `carga_familiar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `cepir`
+--
+ALTER TABLE `cepir`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `configuracion`
+--
+ALTER TABLE `configuracion`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `especialidad`
+--
+ALTER TABLE `especialidad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `funcion`
+--
+ALTER TABLE `funcion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `funcion_perfil`
+--
+ALTER TABLE `funcion_perfil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `instituto`
+--
+ALTER TABLE `instituto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `municipio`
+--
+ALTER TABLE `municipio`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pago`
+--
+ALTER TABLE `pago`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `parentesco`
+--
+ALTER TABLE `parentesco`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `parroquia`
+--
+ALTER TABLE `parroquia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `persona`
+--
+ALTER TABLE `persona`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `plano`
+--
+ALTER TABLE `plano`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `solvencia`
+--
+ALTER TABLE `solvencia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tarifa`
+--
+ALTER TABLE `tarifa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_pago`
+--
+ALTER TABLE `tipo_pago`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_proyecto`
+--
+ALTER TABLE `tipo_proyecto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `transaccion`
+--
+ALTER TABLE `transaccion`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `universidad`
+--
+ALTER TABLE `universidad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `visado`
+--
+ALTER TABLE `visado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `agremiado_especialidad`
+--
+ALTER TABLE `agremiado_especialidad`
+  ADD CONSTRAINT `agremiado_especialidad_ibfk_1` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `agremiado_especialidad_ibfk_2` FOREIGN KEY (`especialidad_id`) REFERENCES `especialidad` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `agremiado_persona`
+--
+ALTER TABLE `agremiado_persona`
+  ADD CONSTRAINT `agremiado_persona_ibfk_1` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `agremiado_persona_ibfk_2` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `agremiado_proyecto`
+--
+ALTER TABLE `agremiado_proyecto`
+  ADD CONSTRAINT `agremiado_proyecto_ibfk_1` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`);
+
+--
+-- Filtros para la tabla `agremiado_solvencia`
+--
+ALTER TABLE `agremiado_solvencia`
+  ADD CONSTRAINT `agremiado_solvencia_ibfk_1` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `agremiado_solvencia_ibfk_2` FOREIGN KEY (`solvencia_id`) REFERENCES `solvencia` (`id`);
+
+--
+-- Filtros para la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  ADD CONSTRAINT `auditoria_ibfk_1` FOREIGN KEY (`transaccion_id`) REFERENCES `transaccion` (`id`),
+  ADD CONSTRAINT `auditoria_ibfk_2` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`);
+
+--
+-- Filtros para la tabla `auditoria_plano`
+--
+ALTER TABLE `auditoria_plano`
+  ADD CONSTRAINT `auditoria_plano_ibfk_1` FOREIGN KEY (`auditoria_id`) REFERENCES `auditoria` (`id`),
+  ADD CONSTRAINT `auditoria_plano_ibfk_2` FOREIGN KEY (`plano_id`) REFERENCES `plano` (`id`);
+
+--
+-- Filtros para la tabla `bitacora`
+--
+ALTER TABLE `bitacora`
+  ADD CONSTRAINT `bitacora_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
+
+--
+-- Filtros para la tabla `cepir`
+--
+ALTER TABLE `cepir`
+  ADD CONSTRAINT `cepir_ibfk_1` FOREIGN KEY (`transaccion_id`) REFERENCES `transaccion` (`id`);
+
+--
+-- Filtros para la tabla `funcion`
+--
+ALTER TABLE `funcion`
+  ADD CONSTRAINT `funcion_ibfk_1` FOREIGN KEY (`id`) REFERENCES `funcion_perfil` (`funcion_id`);
+
+--
+-- Filtros para la tabla `funcion_perfil`
+--
+ALTER TABLE `funcion_perfil`
+  ADD CONSTRAINT `funcion_perfil_ibfk_1` FOREIGN KEY (`perfil_id`) REFERENCES `perfil` (`id`);
+
+--
+-- Filtros para la tabla `municipio`
+--
+ALTER TABLE `municipio`
+  ADD CONSTRAINT `municipio_ibfk_1` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`);
+
+--
+-- Filtros para la tabla `pago`
+--
+ALTER TABLE `pago`
+  ADD CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`tipo_pago_id`) REFERENCES `tipo_pago` (`id`),
+  ADD CONSTRAINT `pago_ibfk_2` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`);
+
+--
+-- Filtros para la tabla `parroquia`
+--
+ALTER TABLE `parroquia`
+  ADD CONSTRAINT `parroquia_ibfk_1` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`),
+  ADD CONSTRAINT `parroquia_ibfk_2` FOREIGN KEY (`id`) REFERENCES `agremiado` (`parroquia_id`);
+
+--
+-- Filtros para la tabla `plano`
+--
+ALTER TABLE `plano`
+  ADD CONSTRAINT `plano_ibfk_1` FOREIGN KEY (`agremiado_id`) REFERENCES `agremiado` (`id`);
+
+--
+-- Filtros para la tabla `proyecto`
+--
+ALTER TABLE `proyecto`
+  ADD CONSTRAINT `proyecto_ibfk_1` FOREIGN KEY (`id`) REFERENCES `agremiado_proyecto` (`proyecto_id`),
+  ADD CONSTRAINT `proyecto_ibfk_2` FOREIGN KEY (`instituto_id`) REFERENCES `instituto` (`id`),
+  ADD CONSTRAINT `proyecto_ibfk_3` FOREIGN KEY (`tipo_proyecto_id`) REFERENCES `tipo_proyecto` (`id`);
+
+--
+-- Filtros para la tabla `solvencia`
+--
+ALTER TABLE `solvencia`
+  ADD CONSTRAINT `solvencia_ibfk_1` FOREIGN KEY (`transaccion_id`) REFERENCES `transaccion` (`id`);
+
+--
+-- Filtros para la tabla `transaccion`
+--
+ALTER TABLE `transaccion`
+  ADD CONSTRAINT `transaccion_ibfk_1` FOREIGN KEY (`id`) REFERENCES `pago` (`transaccion_id`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`perfil_id`) REFERENCES `perfil` (`id`);
+
+--
+-- Filtros para la tabla `visado`
+--
+ALTER TABLE `visado`
+  ADD CONSTRAINT `visado_ibfk_1` FOREIGN KEY (`transaccion_id`) REFERENCES `transaccion` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

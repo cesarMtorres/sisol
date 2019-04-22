@@ -9,3 +9,7 @@ a > span{
 	padding-right:3px; 
 }
 
+button > span{	
+	padding-right: 3px;
+}
+

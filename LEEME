@@ -1,0 +1,27 @@
+pago es de mucho a muchos??
+
+es necesario una tabla pivote?
+
+
+controlador de estudiante a cursos mucho a mucho
+
+    public function asignarCursos(Request $request)
+    {
+        $stu = Student::find($request->Estudiante);
+        if ($request->ajax()) {
+            if(is_array($request->Cursos)){
+                foreach ($request->Cursos as $curso){
+                    if($curso != null)
+                        if(!$stu->courses()->where('course_id', $curso)->exists())
+                            $stu->courses()->attach($curso);
+                }
+                return response()->json(["Estado"=>"Registrado"]);
+            }else{
+                if($request->Cursos != null)
+                    if(!$stu->courses()->where('course_id', $request->Cursos)->exists())
+                        $stu->courses()->attach($request->Cursos);
+                return response()->json(["Estado"=>"Registrado"]);
+            }
+        }
+        return response()->json(["Estado"=>"Error"]);
+    }

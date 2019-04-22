@@ -3,14 +3,23 @@
 namespace App\Http\Controllers;
 use App\Agremiado;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProyectoRequest;
+use App\Persona;
 
 class AgremiadoController extends Controller
 {
  public function index()
     {
         //
+
         $agremiados=Agremiado::orderBy('id','ASC')->paginate(20);
-        return view('agremiado.index',compact('agremiados'));
+        //$agremiados=Agremiado::with('personas')->get();
+        $agremiados->each(function($agremiados){
+            $agremiados->personas;
+            $agremiados->especialidades;
+        });
+        return view('agremiado.index')
+        ->with('agremiados',$agremiados);
     }
 
     /**

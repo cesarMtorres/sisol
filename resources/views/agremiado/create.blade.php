@@ -1,9 +1,7 @@
 @extends('layouts.layout')
 @section('content')
-
-
-
   <section class="content">
+    <div class="col">
       @if (count($errors) > 0)
       <div class="alert alert-danger">
         <strong>Error!</strong> Revise los campos obligatorios.<br><br>
@@ -19,72 +17,104 @@
         {{Session::get('success')}}
       </div>
       @endif
- 
-<div class="container">
+
+      <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Nuevo Agremiado</h3><br/>
+          <h3 class="panel-title">Nuevo Agremiado</h3>
         </div>
-<form method="POST" action="{{ route('agremiado.store') }}" role="form" class="needs-validation" novalidate>
-  {{ csrf_field() }}
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <label for="validationServer01">Nombre y apellido</label>
-      <input type="text" name="nombre" class="form-control" id="validationServer01" placeholder="" value="{{ old('nombre') }}" required="">
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationServerUsername">Cedula</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
+        <div class="panel-body">          
+          <div class="table-container">
+            <form method="POST" action="{{ route('agremiado.store') }}"  role="form">
+              {{ csrf_field() }}
+              <input name="_method" type="hidden" value="PATCH">
+              <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" title="Campo: Nombre" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('nombre') }}">
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <label>Apellido</label>
+                  <div class="form-group">
+                    <input type="text" title="Campo: Apellido" name="apellido" id="apellido" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('apellido')}}">
+                  </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                  <label>cedula</label>
+                  <div class="form-group">
+                    <input type="text" title="Campo: Cedula" name="cedula" id="cedula" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('cedula')}}">
+                  </div>
+                </div>                
+              </div>
+
+              <div class="form-group">
+                <label>Direccion</label>
+                <textarea name="direccion" title="Campo: Direccion" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" >{{ old('direccion')}}</textarea>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <label>civ</label>
+                    <input type="text" title="Campo: Civ" name="civ" id="civ" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control input-sm" value="{{ old('civ')}}">
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <label>Especialidad</label>
+                    <input type="text" title="Campo: Especialidad" name="especialidad" id="especialidad" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('especialidad')}}">
+                  </div>
+                </div>
+              </div>
+                 <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-4">
+                  <div class="form-group">
+                    <label>Codigo</label>
+                    <input type="text" title="Campo: Código" name="codigo" id="codigo" class="form-control input-sm"  onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('codigo') }}">
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-4">
+                  <div class="form-group">
+                    <label>Solvencia</label>
+                         <input type="date" name="solvencia" id="solvencia" class="form-control input-sm" placeholder="solvencia" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('solvencia') }}">
+
+                  </div>
+                </div>
+                  <div class="col-xs-6 col-sm-6 col-md-4">
+                  <div class="form-group">
+                    <label>Estado</label>
+                    <input type="text" name="estado" id="estado" class="form-control input-sm" placeholder="estado" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{  old('estado') }}">
+                  </div>
+                </div>
+              </div>
+                            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <label>Teléfono</label>
+                    <input type="text" name="civ" id="civ" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control input-sm" value="{{ old('civ')}}">
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <label>Correo</label>
+                    <input type="text" name="especialidad" id="especialidad" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('especialidad')}}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Trabajo</label>
+                <textarea name="trabajo" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" >{{ old('trabajo')}}</textarea>
+              </div>
+              <a href="{{ route('agremiado.index') }}" class="btn btn-info">Atras</a>
+                  <button class="btn btn-primary" type="submit">Registrar</button>
+                  
+
+            </form>
+          </div>
         </div>
-        <input type="text" class="form-control " name="cedula" id="validationServerUsername" placeholder="" aria-describedby="inputGroupPrepend3"  value="{{ old('cedula') }}" required>
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationServer03">Direccion</label>
-      <input type="text" class="form-control " name="direccion" id="validationServer03" placeholder=""  value="{{ old('direccion') }}" required>
-      <div class="invalid-feedback">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationServer04">civ</label>
-      <input type="text" class="form-control " id="validationServer04" name="civ"  placeholder=""  value="{{ old('civ') }}" required>
-      <div class="invalid-feedback">
-        Please provide a valid state.
-      </div>  
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationServer05">Codigo</label>
-      <input type="text" class="form-control " id="validationServer05" name="codigo" placeholder=""  value="{{ old('codigo') }}" required>
-      <div class="invalid-feedback">
-        Please provide a valid zip.
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationServer01">Solvencia</label>
-      <input type="text" class="form-control " id="validationServer01" name="solvencia" placeholder="" value="{{ old('nombre') }}" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="validationServer02">Trabajo</label>
-      <input type="text" class="form-control input-sm " id="validationServer02" name="trabajo" placeholder="" value="{{ old('trabajo') }}" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-  </div>
-    <a href="{{ route('agremiado.index') }}" class="btn btn-info">Atras</a>
-  <button class="btn btn-primary" type="submit">Submit form</button>
 
-</form>
-
-</div>
-</div>
+      </div>
+    </div>
   </section>
   @endsection

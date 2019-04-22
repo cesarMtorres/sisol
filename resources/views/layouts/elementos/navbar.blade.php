@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" style="color: white" href="#">SISOL</a>
+      <a class="navbar-brand" style="color: white" href="">SISOL</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -33,7 +33,7 @@
             <li><a href="#">Solvencia</a></li>
             <li><a href="#">Cepir</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Visado</a></li>
+            <li><a href="{{ route('plano.index') }}">Planos</a></li>
           </ul>
         </li>
       </ul>
