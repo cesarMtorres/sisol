@@ -12,10 +12,10 @@ class PagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $pagos=Pago::orderBy('id','ASC')->paginate(20);
+        $pagos=Pago::search($request->nombre)->orderBy('id','ASC')->paginate(20);
         return view('pago.index',compact('pagos'));        
     }
 

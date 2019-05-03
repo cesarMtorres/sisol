@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Agremiado;
 use Illuminate\Http\Request;
 
 class VisadoController extends Controller
@@ -11,9 +11,10 @@ class VisadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //search($request->nombre)->
+        return view('visado.index');
     }
 
     /**
@@ -24,6 +25,8 @@ class VisadoController extends Controller
     public function create()
     {
         //
+        $agremiados=Agremiado::orderBy('id','ASC')->paginate(20);
+        return view('visado.create',compact('agremiados'));
     }
 
     /**

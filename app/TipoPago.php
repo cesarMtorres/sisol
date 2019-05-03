@@ -11,4 +11,8 @@ class TipoPago extends Model
     protected $dates=['deleted_at'];
     protected $table="tipo_pago";
     protected $fillable=['nombre'];
+
+        public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

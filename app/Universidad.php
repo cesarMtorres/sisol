@@ -14,4 +14,10 @@ class Universidad extends Model
     protected $table="universidad";
 
     protected $fillable=["nombre"];
+
+
+
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

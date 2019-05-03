@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Funcion;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\FuncionRequest;
 class FuncionController extends Controller
 {
     /**
@@ -11,9 +11,11 @@ class FuncionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //search($request->nombre)->
+        $funciones=Funcion::all();
+        return view('funcion.index',compact('funciones'));
     }
 
     /**
@@ -24,6 +26,7 @@ class FuncionController extends Controller
     public function create()
     {
         //
+        return view('funcion.create');
     }
 
     /**
@@ -32,9 +35,12 @@ class FuncionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FuncionRequest $request)
     {
         //
+        $funcion=new Funcion($request->all());
+        $funcion->save();
+        return redirect()->route('funcion.index');
     }
 
     /**
@@ -46,6 +52,8 @@ class FuncionController extends Controller
     public function show($id)
     {
         //
+        $funciones=Funcion::findOrFail($id);
+        return view('funcion.show',compact('funciones'));
     }
 
     /**
@@ -57,6 +65,8 @@ class FuncionController extends Controller
     public function edit($id)
     {
         //
+        $funciones=Funcion::findOrFail($id);
+        return view('funcion.edit',compact('funciones'));
     }
 
     /**
@@ -66,9 +76,12 @@ class FuncionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FuncionRequest $request, $id)
     {
         //
+        $validated=$request->validated();
+        Funcion::find($id)->update($request->all());
+        return redirect()->route('funcion.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -80,5 +93,7 @@ class FuncionController extends Controller
     public function destroy($id)
     {
         //
+        Funcion::find($id)->delete();
+        return redirect()->route('funcion.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

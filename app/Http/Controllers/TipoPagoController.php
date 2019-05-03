@@ -11,10 +11,10 @@ class TipoPagoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tpagos=TipoPago::orderBy('id','ASC')->paginate(20);
+        $tpagos=TipoPago::search($request->nombre)->orderBy('id','ASC')->paginate(10);
         return view('tpago.index',compact('tpagos'));
 
     }
@@ -54,7 +54,7 @@ class TipoPagoController extends Controller
     {
         //
         $tpagos=TipoPago::findOrFail($id);
-        return view('tpagos.show',compact('tpagos'));
+        return view('tpago.show',compact('tpagos'));
     }
 
     /**
@@ -67,7 +67,7 @@ class TipoPagoController extends Controller
     {
         //
         $tpagos=TipoPago::findOrFail($id);
-        return view('tpagos.edit',compact('tpagos'));
+        return view('tpago.edit',compact('tpagos'));
     }
 
     /**

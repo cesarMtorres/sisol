@@ -17,5 +17,7 @@ class Plano extends Model
     	return $this->belognToMany('App\Agreamiado');
 
     }
-
+     public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

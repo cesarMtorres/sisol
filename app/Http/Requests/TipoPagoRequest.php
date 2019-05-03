@@ -25,7 +25,7 @@ class TipoPagoRequest extends FormRequest
     {
         return [
             //
-            'nombre' => 'min:8|max:20|required|unique:tipo_pago'
+            'nombre' => 'min:4|max:50|required|unique:tipo_pago'
         ];
     }
 }

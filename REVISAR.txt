@@ -1,0 +1,50 @@
+
+carga familiar{
+	no hae crud
+}
+falta clasificacion en instrumento baremo
+
+agremiado{
+	no update
+}
+no mostrar usuario y baremos en show{
+	errores y no realizado
+}
+mostrar la definicion de cepir,{
+	en cepir
+}
+solvencia tecnica{
+	crear maestro de certificados a pagar
+}
+
+tarifa{
+	
+
+validar numero,numero en tarifa
+
+no dejar permitir esto 1...0000.00
+mostrar fecha y agregar max
+}
+
+baremos{
+	registro de claficacion en ajax
+	problema de relaciones en instrumento y clasificacion
+	problema de visualizar show
+}
+
+usuario{
+	no hay vista
+}
+
+tarifa,tipo_pago{
+	agregado el IA en id que no tenia
+}
+
+
+auditoria{
+	faltan relaciones , y tabla plano o pdf, y direccion, deleted_at hacerlo null predeterminado
+}		
+
+visado agregar{
+	direccion,agremiado_id, observacion
+}

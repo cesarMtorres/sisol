@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Proyecto;
+use App\Instituto;
+use App\TipoProyecto;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProyectoRequest;
 
@@ -12,10 +14,10 @@ class ProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $proyectos=Proyecto::OrderBy('id','ASC')->paginate(20);
+        $proyectos=Proyecto::search($request->nombre)->OrderBy('id','ASC')->paginate(20);
         return view('proyecto.index',compact('proyectos'));       
     }
 
@@ -27,7 +29,11 @@ class ProyectoController extends Controller
     public function create()
     {
         //
-        return view('proyecto.create');
+        $tps = TipoProyecto::select('id','nombre')->orderBy('nombre','ASC')
+        ->get();
+        $ins = Instituto::select('id','nombre')->orderBy('nombre','ASC')
+        ->get();
+        return view('proyecto.create',compact('tps','ins'));
     }
 
     /**

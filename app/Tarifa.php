@@ -13,5 +13,7 @@ class Tarifa extends Model
     protected $fillable=["nombre","monto","fecha_ini","fecha_fin"];
     protected $dates=["deleted_at"];
 
-
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

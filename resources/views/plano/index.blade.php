@@ -13,7 +13,7 @@
         </div>
           <div class="pull-right">
             <div class="btn-group">
-              <a title="Nuevo Registro" href="{{ route('plano.create') }}" class="btn btn-info" >Agregar Auditoria</a> 
+              <a title="Nuevo Registro" href="{{ route('plano.create') }}" class="btn btn-info" >Agregar</a> 
             </div>
 <!--                <form class="form-inline">
               <input type="text" name="" placeholder="Buscar" class="form-control rm-sm-2">
@@ -26,10 +26,11 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>CIV</th>
-               <th>Nombre ingeniero</th>
+              <th>N°</th>
+               <th>Civ</th>
+               <th>Nombre Ingeniero</th>
                <th>Nombre del Proyecto</th>
-               <th>Fecha registrado</th>
+               <th>Fecha Registrado</th>
              </thead>
 
               <tr>

@@ -11,10 +11,10 @@ class PlanoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-       $planos=Plano::orderBy('id','ASC')->paginate(20);
+       $planos=Plano::search($request->nombre)->orderBy('id','ASC')->paginate(10);
         return view('plano.auditoria.index', compact('planos'));
     }
 

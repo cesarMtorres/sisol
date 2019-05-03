@@ -18,7 +18,13 @@ class Especialidad extends Model
 
 	public function agremiados(){
 
-    	return $this->belongsToMany('App\Agremiado');
+    	return $this->belongsToMany('App\Agremiado','agremiado_especialidad','agremiado_id','especialidad_id')->withPivot('agremiado_id','especialidad_id');
 
     }
+
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
+
+
 }

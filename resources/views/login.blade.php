@@ -22,16 +22,16 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-   <a href="{{ route('login') }}"><b>SI</b>SOL</a>
+   <a href="#"><b>SI</b>SOL</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Iniciar Sesión</p>
 
-    <form action="{{ route('app.dashboard') }}" >
-      {{ csrf_field() }} 
+    <form action="{{ route('loginsubmit') }}" method="POST">
+      @csrf
       <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error':'' }}">
-        <input type="text" class="form-control" placeholder="Usuario" name="email" id="email" value="{{ old('email') }}" required autofocus>
+        <input type="text" class="form-control" placeholder="Usuario" name="email" id="email" value="{{ old('email') }}" maxlength="50" required autofocus>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
         @if($errors->has('email'))
@@ -42,7 +42,7 @@
 
       </div>
       <div class="form-group has-feedback {{ $errors->has('password')? 'has-error':'' }}">
-        <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password" required>
+        <input type="password" class="form-control" placeholder="Contraseña" name="password" id="password" maxlength="50" required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
         @if($errors->has('password'))

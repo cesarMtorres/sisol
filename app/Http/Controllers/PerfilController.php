@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Perfil;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\PerfilRequest;
 class PerfilController extends Controller
 {
     /**
@@ -11,9 +11,11 @@ class PerfilController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //search($request->nombre)->
+        $perfiles=Perfil::all();
+        return view('perfil.index',compact('perfiles'));
     }
 
     /**
@@ -24,6 +26,7 @@ class PerfilController extends Controller
     public function create()
     {
         //
+        return view('perfil.create');
     }
 
     /**
@@ -32,9 +35,12 @@ class PerfilController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PerfilRequest $request)
     {
         //
+        $perfil=new Perfil($request->all());
+        $perfil->save();
+        return redirect()->route('perfil.index');
     }
 
     /**
@@ -46,6 +52,8 @@ class PerfilController extends Controller
     public function show($id)
     {
         //
+        $perfiles=Perfil::findOrFail($id);
+        return view('perfil.show',compact('perfiles'));
     }
 
     /**
@@ -57,6 +65,8 @@ class PerfilController extends Controller
     public function edit($id)
     {
         //
+        $perfiles=Perfil::findOrFail($id);
+        return view('perfil.edit',compact('perfiles'));
     }
 
     /**
@@ -66,9 +76,12 @@ class PerfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PerfilRequest $request, $id)
     {
         //
+         $validated=$request->validated();
+        Perfil::find($id)->update($request->all());
+        return redirect()->route('perfil.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -80,5 +93,7 @@ class PerfilController extends Controller
     public function destroy($id)
     {
         //
+         Perfil::find($id)->delete();
+        return redirect()->route('perfil.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

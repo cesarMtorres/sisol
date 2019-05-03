@@ -13,10 +13,10 @@ class UniversidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $universidades=Universidad::OrderBy('id','ASC')->paginate(20);
+        //$especialidades=Especialidad::search($request->name)->OrderBy('id','ASC')->paginate(5);
+        $universidades=Universidad::search($request->name)->OrderBy('id','ASC')->paginate(20);
 
         return view('universidad.index',compact('universidades'));
     }

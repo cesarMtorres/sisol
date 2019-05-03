@@ -28,15 +28,20 @@
               {{ csrf_field() }}
              
               <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" title="Campo: Nombre" name="nombre" id="nombre"  readonly="readonly" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ $tarifas->nombre }}">
+                   </div>
+                 </div>
+                    <div class="col-sm-6 col-md-6 col-xs-6">
                     <label>Monto</label>
                     <input type="text" title="Campo: monto" name="monto" id="monto"  readonly="readonly" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ $tarifas->monto }}">
                   </div>
+                </div>
 
-
+                  <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-6">
                           <label>Rango de Fecha</label>
                           <div class="input-daterange input-group" data-plugin-datepicker>
                             <span class="input-group-addon">
@@ -50,9 +55,8 @@
                       </div>
 
                 </div>
-
-          </div>
         </br>
+        <div id="sms"></div>
                    <div class="row">
                   <div class="col-sm-4 col-md-6">
               <a href="{{ route('tarifa.index') }}" class="btn btn-info">Atras</a>

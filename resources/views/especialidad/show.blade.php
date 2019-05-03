@@ -25,7 +25,7 @@
         <div class="panel-body">          
           <div class="table-container">
             <form method="POST" action="{{ route('especialidad.update',$especialidades->id) }}"  role="form">
-              {{ csrf_field() }}
+              @csrf
               <input name="_method" type="hidden" value="PATCH">
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">

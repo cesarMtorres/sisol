@@ -25,7 +25,7 @@ class TarifaRequest extends FormRequest
     {
         return [
             //
-            'nombre' => 'min:4|max:30|required|unique:tarifa',
+            'nombre' => 'min:4|max:30|required|unique:tarifa|string',
             'monto' => 'required',
             'fecha_ini' => 'required',
             'fecha_fin' => 'required'

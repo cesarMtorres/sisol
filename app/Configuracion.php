@@ -14,4 +14,9 @@ class Configuracion extends Model
     	"nombre",
     	"logo",
     ];
+
+    
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

@@ -12,4 +12,8 @@ class Auditoria extends Model
     protected $table="auditoria";
     //protected $primaryKey="agrem_id";
     protected $fillable=["codigo","status","transaccion_id","agremiado_id","observacion","plano"];
+
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

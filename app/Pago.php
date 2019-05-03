@@ -18,4 +18,10 @@ class Pago extends Model
     	'transaccion_id',
     	'agremiado_id'
     ];
+
+
+
+    public function scopeSearch($query,$nombre){
+    return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

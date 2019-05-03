@@ -11,7 +11,7 @@
           <div class="panel-heading">
           <div class="panel-tittle">
           <div class=""><h3>Lista Agremiado</h3></div>
-           <!-- <a href="{{ ('app.excel.download') }}" class="btn btn-primary" id="btnDescargar" style="padding:4px 10px;">Descargar Plantilla</a> -->
+           <a href="{{ url('dynamic_pdf/pdf') }}" class="btn btn-danger">Imprimir</a>
              </div>
 
         </div>
@@ -19,8 +19,8 @@
         </div>
           <div class="pull-right">
             <div class="btn-group">
-
-              <a title="Nuevo Registro" href="{{ route('agremiado.create') }}" class="btn btn-info" >Agregar Agremiado</a> 
+              <a class="btn btn-primary" href="#">Buscar</a>
+              <a title="Nuevo Registro" href="{{ route('agremiado.create') }}" class="btn btn-success" >Agregar</a> 
             </div>
 
           </div>
@@ -29,37 +29,35 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Nombre</th>
-               <th>Civ</th>
-               <th>Trabajo</th>
-               <th>Solvencia</th>
-               <th>Especialidad</th>
+              <th>N°</th>
+              <th>Civ</th>
                <th>Cedula</th>
-               <th>telefono</th>
-               <th>Direccion</th>
+               <th>Nombre</th>
+               <th>Apellido</th>
+               <th>Teléfono</th>
              </thead>
              <tbody>
               @if($agremiados->count())  
-              @foreach($agremiados as $agremiado)  
-
+              @foreach($agremiados as $key => $agremiado)
+              @foreach($agremiado->personas as $persona)
               <tr>
-                <td>{{$agremiado->personas}}</td>
-                <td>{{$agremiado->civ}}</td>
-                <td>{{$agremiado->trabajo}}</td>
-                <td>{{$agremiado->solvencia}}</td>
-                <td>{{$agremiado->especialidades}}</td>
-                <td>{{$agremiado->telefono}}</td>
-                <td>{{$agremiado->direccion}}</td>
-
+                <td>{{$key+1 }}</td>
+                <td>{{$agremiado->civ }}</td>
+                <td>{{$persona->cedula}}</td>
+                <td>{{$persona->nombre}}</td>
+                 <td>{{$persona->apellido}}</td>
+                <td>{{$persona->telefono}}</td>
+                
                 <td><a title="Ver" class="btn btn-xs btn-info" href="{{action('AgremiadoController@show', $agremiado->id)}}" ><span class="icon icon-eye"></span>Ver</a></td>
                <td>
                   <form action="{{action('AgremiadoController@destroy', $agremiado->id)}}" method="post">
-                   {{csrf_field()}}
+                   @csrf
                    <input name="_method" type="hidden" value="DELETE">
                    <button onclick="return confirm('ESTÁS SEGURO QUE DESEAS ELIMINAR EL AGREMIADO?');" class="btn btn-xs btn-danger" type="submit"><span class="icon icon-trash">Eliminar</span></button>
-
+                   </form>
                  </td> 
                </tr>
+               @endforeach
                @endforeach 
                @else
                <tr>
@@ -71,10 +69,9 @@
           </table>
         </div>
       </div>
-      <div class="pagination">
-        <li class="page-item">{{ $agremiados->links() }}</a></li>
-      
-    </div>
+      <div class="pagination pull-right">
+        <li class="page-item"></a></li>
+      </div>
     </div>
   </div>
 </section>

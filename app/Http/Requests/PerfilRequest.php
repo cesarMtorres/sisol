@@ -25,6 +25,8 @@ class PerfilRequest extends FormRequest
     {
         return [
             //
+            'nombre' => 'required|min:4|max:50',
+            'nivel' => 'required|min:1'
         ];
     }
 }

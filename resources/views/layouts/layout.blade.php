@@ -7,7 +7,7 @@
 
     <title>@yield('title','DASHBOARD')</title>
     <meta name="keywords" content="HTML5 Admin" />
-    <meta name="description" content="SISOL Admin - Responsive HTML5 Template">
+    <meta name="description" content="SISOL Admin">
     <meta name="author" content="Cesar Molina">
 
     <!-- Mobile Metas -->
@@ -48,7 +48,7 @@
       <!-- start: header -->
       <header class="header">
         <div class="logo-container">
-          <a href="{{ route('app.dashboard') }}" class="logo">
+          <a href="{{ route('dashboard') }}" class="logo">
             <img src="{{ asset("images/logo.PNG")}}" height="40" alt="SISOL" />
             
           </a>
@@ -113,22 +113,42 @@
           <div id="userbox" class="userbox">
             <a href="#" data-toggle="dropdown">
               <figure class="profile-picture">
-                <img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
+                <img src="assets/images/!logged-user.jpg" alt="Cesar" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
               </figure>
-              <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-                <span class="name">Cesar Molina</span>
-                <span class="role">administrator</span>
+              <div class="profile-info">
+               
+
+                  @if(Route::has('login')) 
+   
+                <span class="name">
+     
+                  <span class="role"> {{ Auth::user()->name }}</span>
+                </span>
+
+
+                @if(Auth::user()->id==1)     
+                  <span class="role">Administrador</span> 
+                @else
+                  <span class="role">Usuario</span>    
+                @endif
+                   @endif
+                   @guest
+                   <span class="role">Invitado</span>
+                   @endguest
+
               </div>
-      
               <i class="fa custom-caret"></i>
             </a>
       
             <div class="dropdown-menu">
+              @auth
+               
               <ul class="list-unstyled">
                 <li class="divider"></li>
                 <li>
                   <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="fa fa-user"></i>Mi Perfil</a>
                 </li>
+                @if(Auth::user()->id==1)
                    <li >
                     <a href="{{ route('configuracion.index') }}">
                       <i class="fa fa-wrench" aria-hidden="true"></i>
@@ -138,10 +158,20 @@
       <!--          <li>
                   <a role="menuitem" tabindex="-1" href="#" data-lock-screen="true"><i class="fa fa-lock"></i> Lock Screen</a>
                 </li> -->
-                <li>
-                  <a role="menuitem" tabindex="-1" href=" {{ route('logout') }}"><i class="fa fa-power-off"></i>Cerrar Sesion</a>
-                </li>
+                  <li>
+                   @endif
+                    <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                      <i class="fa fa-power-off"></i>
+                    <span>Cerrar Sesion</span>
+                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                     {{ csrf_field() }}
+                   </form>
+               </li>
               </ul>
+              
+              @endauth
             </div>
           </div>
         </div>
@@ -151,6 +181,8 @@
 
       <div class="inner-wrapper">
         <!-- start: sidebar -->
+        @if(Route::has('login')) 
+
         <aside id="sidebar-left" class="sidebar-left">
         
           <div class="sidebar-header">
@@ -161,13 +193,17 @@
               <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
             </div>
           </div>
-        
+    
+
           <div class="nano">
             <div class="nano-content">
               <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
+                  
+                    @auth  
+                   @if(Auth::user()->id==1)
                   <li class="nav-active">
-                    <a href="{{ route('app.dashboard') }}">
+                    <a href="{{ route('dashboard') }}">
                       <i class="fa fa-home" aria-hidden="true"></i>
                       <span>dashboard</span>
                     </a>
@@ -219,21 +255,21 @@
                            Carga Familiar
                         </a>
                       </li>
-                        <li>
-                        <a href="{{ route('proyecto.index') }}">
+            <!--            <li>
+                        <a href="">
                            Proyecto
-                        </a>
+                        </a>-->
                       </li>              
                       <li>
                         <a href="{{ route('tproyecto.index') }}">
-                           Tipo Proyecto
+                           Motivo
                         </a>
                       </li>  
-                      <li>
-                        <a href="{{ route('pago.index') }}">
+              <!--        <li>
+                        <a href="">
                            Pago
                         </a>
-                      </li>                                                                                                                    
+                      </li> -->                                                                                                                     
                       <li>
                         <a href="{{ route('tpago.index') }}">
                            Tipo Pago
@@ -257,17 +293,31 @@
                       </li>                      
                     </ul>
                   </li>
+                  
+  
                   <li class="nav-parent">
                     <a>
                       <i class="fa fa-tasks" aria-hidden="true"></i>
                       <span>Proceso</span>
                     </a>
                     <ul class="nav nav-children">
+                         <li class="nav-parent">
+                    <a>
+                      <span>Solvencia</span>
+                    </a>
+                    <ul class="nav nav-children">
                       <li>
-                        <a href="{{ route('solvencia.index') }} ">
-                           Solvencia
+                        <a href="{{ route('solvencia.index') }}">
+                           Administrativa
                         </a>
                       </li>
+                      <li>
+                        <a href="{{ route('solvenciat.index') }}">
+                           Tecnica
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                       <li>
                         <a href="{{ route('cepir.index') }}">
                            Cepir
@@ -286,8 +336,27 @@
 
                     </ul>
                   </li>
-
-                  <li class="nav-parent">
+                     <li class="nav-parent">
+                    <a>
+                      <i class="fa  fa-cogs" aria-hidden="true"></i>
+                      <span>Mantenimiento</span>
+                    </a>
+                    <ul class="nav nav-children">
+                      <li>
+                        <a href="#">
+                           Bitacora
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                           Respaldar Y Restaurar
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  @endif
+              @if(Auth::user()->id==2)
+                    <li class="nav-parent">
                     <a>
                       <i class="fa fa-question-circle" aria-hidden="true"></i>
                       <span>Ayuda</span>
@@ -305,12 +374,48 @@
                       </li>
                     </ul>
                   </li>
-                                    <li class="nav">
-                    <a href="{{ route('logout') }}">
-                      <i class="fa fa-power-off" aria-hidden="true"></i>
-                      <span>Cerrar sesion</span>
-                    </a>
+                  @endif
+                   <li class="nav">
+                    <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-1').submit();">
+                      <i class="fa fa-power-off"></i>
+                    <span>Cerrar Sesion</span>
+                     </a>
+
+                    <form id="logout-1" action="{{ route('logout') }}" method="POST" style="display: none;">
+                     @csrf
+                   </form>
                   </li>
+
+
+                    
+
+                  @endauth
+
+                    @guest
+                      <li class=""><a href="{{ route('login') }}"><i class="fa fa-user"></i>Entrar</a></li>
+                      <li><a href="{{ route('register') }}"><i class="fa fa-save"></i>Registrar</a></li>
+                                        <li class="nav-parent">
+                    <a>
+                      <i class="fa fa-question-circle" aria-hidden="true"></i>
+                      <span>Ayuda</span>
+                    </a>
+                    <ul class="nav nav-children">
+                      <li>
+                        <a href="tables-basic.html">
+                           Manual de Usuario
+                        </a>
+                      </li>
+                      <li>
+                        <a href="tables-advanced.html">
+                           Manual del Sistema
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                   @endguest
+                  
+
+
                 </ul>
 
               </nav>
@@ -323,8 +428,11 @@
             </div>
         
           </div>
+           
+            
         
         </aside>
+        @endif
         <!-- end: sidebar -->
 
         <section role="main" class="content-body">
@@ -334,7 +442,7 @@
             <div class="right-wrapper pull-right">
               <ol class="breadcrumbs">
                 <li>
-                  <a href="{{ route('app.dashboard') }}">
+                  <a href="{{ route('dashboard') }}">
                     <i class="fa fa-home"></i>
                   </a>
                 </li>

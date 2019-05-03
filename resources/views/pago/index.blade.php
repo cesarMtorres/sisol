@@ -15,7 +15,7 @@
         </div>
           <div class="pull-right">
             <div class="btn-group">
-              <a title="Nuevo Registro" href="{{  route('pago.create')  }}" class="btn btn-info" >Agregar Pago</a>
+              <a title="Nuevo Registro" href="{{  route('pago.create')  }}" class="btn btn-info" >Agregar</a>
             </div>
           </div>
 
@@ -24,14 +24,15 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Id</th>
+               <th>N°</th>
                <th>Nombre</th>
                <th></th>
              </thead>
              <tbody>
               @if($pagos->count())  
-              @foreach($pagos as $pago)  
+              @foreach($pagos as $key=>$pago)  
               <tr>
+                <td>{{ $key+1 }}</td>
                 <td>{{$pago->id}}</td>
                 <td>{{$pago->nombre}}</td>
 

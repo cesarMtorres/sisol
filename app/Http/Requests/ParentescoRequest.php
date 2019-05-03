@@ -25,7 +25,7 @@ class ParentescoRequest extends FormRequest
     {
         return [
             //
-            'nombre' => 'min:4|max:12|required|unique:parentesco'
+            'nombre' => 'min:4|max:50|required|unique:parentesco'
         ];
     }
 }

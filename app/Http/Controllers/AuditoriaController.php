@@ -11,10 +11,10 @@ class AuditoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-      $auditorias=Auditoria::orderBy('id','ASC')->paginate(20);
+      $auditorias=Auditoria::search($request->nombre)->orderBy('id','ASC')->paginate(20);
         return view('auditoria.index',compact('auditorias'));
     }
 

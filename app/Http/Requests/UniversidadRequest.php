@@ -25,7 +25,7 @@ class UniversidadRequest extends FormRequest
     {
         return [
             //
-            'nombre' => 'min:3|max:20|required|unique:universidad'
+            'nombre' => 'min:3|max:30|required|unique:universidad'
         ];
     }
 }

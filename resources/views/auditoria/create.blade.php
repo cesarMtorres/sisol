@@ -44,8 +44,7 @@
 </div> 
           <div class="table-container">
             <form method="POST" action="{{ route('auditoria.store') }}"  role="form">
-              {{ csrf_field() }}
-              <!--<input name="_method" type="hidden" value="PATCH"> -->
+              @csrf
                  <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-4">
                     <label>Responsable</label>
@@ -72,7 +71,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                   <div class="form-group">
                     <label>nombre del Proyecto</label>
-                    <input type="text" name="civ" id="civ" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control input-sm" value="">
+                    <input type="text" name="civ" id="civ" pattern=".{0}|.{10,150}" title="Requiere minimo de (10 caracteres)"  OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="150" required="required" class="form-control input-sm" value="">
                   </div>
                 </div>
               </div>
@@ -103,7 +102,7 @@
 
               <div class="form-group">
                 <label>observacion</label>
-                <textarea name="trabajo" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="observacion"></textarea>
+                <textarea name="trabajo" class="form-control input-sm" pattern=".{0}|.{15,150}" title="Requiere minimo de (15 caracteres)"  OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="150" required="required" placeholder="observacion"></textarea>
               </div>
           
 

@@ -13,10 +13,10 @@ class ParentescoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $parentescos=Parentesco::OrderBy('id','ASC')->paginate(20);
+        $parentescos=Parentesco::search($request->nombre)->OrderBy('id','ASC')->paginate(10);
         return view('parentesco.index',compact('parentescos'));
     }
 

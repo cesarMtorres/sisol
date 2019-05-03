@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\CargaFamiliar;
+use App\Persona;
+use App\Http\Requests\CargaFamiliarResquest;
 class CargaFamiliarController extends Controller
 {
     /**
@@ -11,9 +13,10 @@ class CargaFamiliarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cfamiliares=CargaFamiliar::all();
+        return view('cfamiliar.index',compact('cfamiliares'));
     }
 
     /**

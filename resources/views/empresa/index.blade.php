@@ -18,7 +18,7 @@
             <div class="btn-group">
          <!--       <a title="Nuevo Registro" href="" class="btn btn-info" >Agregar Universidad</a> -->
 
-               <a class="modal-basic btn btn-info" href="#Crearmodal">Agregar Empresa</a>
+               <a class="modal-basic btn btn-info" href="#Crearmodal">Agregar</a>
 
             </div>
           </div>
@@ -28,7 +28,7 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Id</th>
+               <th>N°</th>
                <th>Nombre</th>
 
              </thead>
@@ -40,7 +40,7 @@
                 <td><a title="Ver" class="btn btn-xs btn-info" href="" ><span class="icon icon-eye"></span>Ver</a></td>
                <td>
                   <form action="" method="post">
-                   {{csrf_field()}}
+                   @csrf
                    <input name="_method" type="hidden" value="DELETE">
                    <button onclick="return confirm('ESTÁS SEGURO QUE DESEAS ELIMINAR LA EMPRESA?');" class="btn btn-xs btn-danger" type="submit"><span class="icon icon-trash">Eliminar</span></button>
 

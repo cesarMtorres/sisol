@@ -25,6 +25,9 @@ class FuncionRequest extends FormRequest
     {
         return [
             //
+            'nombre' => 'required|min:4|max:50',
+            'nivel' => 'required',
+            'status' =>'required'
         ];
     }
 }

@@ -12,10 +12,10 @@ class TarifaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tarifas=Tarifa::OrderBy('id','ASC')->paginate(20);
+        $tarifas=Tarifa::search($request->nombre)->OrderBy('id','ASC')->paginate(20);
         return view('tarifa.index',compact('tarifas'));
 
     }

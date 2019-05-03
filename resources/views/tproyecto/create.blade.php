@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
-@section('panel_name','Tipo Proyecto')
-@section('panel_rigth','Tipo Proyecto')
+@section('panel_name','Motivo')
+@section('panel_rigth','Motivo')
   <section class="content">
     <div class="col">
       @if (count($errors) > 0)
@@ -22,23 +22,24 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Nuevo Tipo Proyecto</h3>
+          <h3 class="panel-title">Nuevo Motivo</h3>
         </div>
         <div class="panel-body">          
           <div class="table-container">
             <form method="POST" action="{{ route('tproyecto.store') }}"  role="form">
-              {{ csrf_field() }}
+             @csrf
              
               <div class="row">
                 <div class="col-xs-8 col-sm-8 col-md-8">
                   <div class="form-group">
                     <label>Nombre</label>
-                    <input type="text" title="Campo: Tipo Proyecto" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('nombre') }}">
+                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" pattern=".{0}|.{5,50}" title="Requiere minimo de (5 caracteres)" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50" required="required" value="{{ old('nombre') }}">
                   </div>
                 </div>
 
           </div>
         </br>
+        <div id="sms"></div>
                    <div class="row">
                   <div class="col-sm-4 col-md-6">
               <a href="{{ route('tproyecto.index') }}" class="btn btn-info">Atras</a>
@@ -52,3 +53,6 @@
     </div>
   </section>
   @endsection
+@section('js')
+<script type="text/javascript" src="{{ asset('js/validaciones.js') }}"></script>
+@endsection  

@@ -11,4 +11,9 @@ class Parentesco extends Model
     protected $table="parentesco";
     protected $fillable=["nombre"];
     protected $dates=['deleted_at'];
+
+
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

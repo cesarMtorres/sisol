@@ -22,5 +22,10 @@ class Persona extends Model
     }
 
 
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+     }
+
+
 }
 

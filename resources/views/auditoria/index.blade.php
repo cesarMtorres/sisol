@@ -15,7 +15,7 @@
         </div>
           <div class="pull-right">
             <div class="btn-group">
-              <a title="Nuevo Registro" href="{{ route('auditoria.create')  }}" class="btn btn-info" >Agregar Auditoria</a>
+              <a title="Nuevo Registro" href="{{ route('auditoria.create')  }}" class="btn btn-info" >Agregar</a>
             </div>
           </div>
 
@@ -24,7 +24,7 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Id</th>
+               <th>N°</th>
                <th>Nombre del proyecto</th>
                <th>Codigo</th>
                <th>Fecha</th>
@@ -34,9 +34,9 @@
              </thead>
              <tbody>
               @if($auditorias->count())  
-              @foreach($auditorias as $auditoria)  
+              @foreach($auditorias as $key=> $auditoria)  
               <tr>
-                <td>{{$auditoria->id}}</td>
+                <td>{{ $key+1 }}</td>
                 <td>{{$auditoria->nombre}}</td>
                 <td>{{$auditoria->codigo}}</td>
                 <td>{{$auditoria->created_at}}</td>
@@ -44,7 +44,7 @@
                 @if ($auditoria->status=="AUDITANDO")
                   <span class="label label-warning">{{$auditoria->status}}</span>
                  @elseif ($auditoria->status=="APROVADO")
-                  <span class="label label-success">{{$auditoria->status}}</span>
+                  <span class="label label-success">{{$auditoria->status}}</span> <span><a href="{{ route('visado.create') }}" class="btn btn-xs btn-success">Visado</a></span>
                 @else
                   <span class="label label-danger">{{$auditoria->status}}</span>
                 @endif

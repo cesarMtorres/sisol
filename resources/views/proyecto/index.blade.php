@@ -15,7 +15,7 @@
         </div>
           <div class="pull-right">
             <div class="btn-group">
-              <a title="Nuevo Registro" href="{{  route('proyecto.create')  }}" class="btn btn-info" >Agregar Proyecto</a>
+              <a title="Nuevo Registro" href="{{  route('proyecto.create')  }}" class="btn btn-info" >Agregar</a>
             </div>
           </div>
 
@@ -24,21 +24,22 @@
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Id</th>
+               <th>N°</th>
                <th>Nombre</th>
 
              </thead>
              <tbody>
               @if($proyectos->count())  
-              @foreach($proyectos as $proyecto)  
+              @foreach($proyectos as $key=>$proyecto)  
               <tr>
+                <td>{{ $key+1 }}</td>
                 <td>{{$proyecto->id}}</td>
                 <td>{{$proyecto->nombre}}</td>
 
                 <td><a title="Ver" class="btn btn-xs btn-info" href="{{action('ProyectoController@show', $proyecto->id)}}" ><span class="icon icon-eye"></span>Ver</a></td>
                <td>
                   <form action="{{action('ProyectoController@destroy', $proyecto->id)}}" method="post">
-                   {{csrf_field()}}
+                   @csrf
                    <input name="_method" type="hidden" value="DELETE">
                    <button onclick="return confirm('ESTÁS SEGURO QUE DESEAS ELIMINAR EL PROYECTO?');" class="btn btn-xs btn-danger" type="submit"><span class="icon icon-trash">Eliminar</span></button>
 

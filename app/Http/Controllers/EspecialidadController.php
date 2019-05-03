@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Especialidad;
 use Illuminate\Http\Request;
 use App\Http\Requests\EspecialidadRequest;
+use DB;
+use PDF;
 
 class EspecialidadController extends Controller
 {
@@ -12,12 +14,13 @@ class EspecialidadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $especialidades=Especialidad::OrderBy('id','ASC')->paginate(20);
+        $especialidades=Especialidad::search($request->name)->OrderBy('id','ASC')->paginate(5);
         return view('especialidad.index',compact('especialidades'));
 
+       
     }
 
     /**
@@ -79,7 +82,7 @@ class EspecialidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProyectoRequest $request, $id)
+    public function update(EspecialidadRequest $request, $id)
     {
         //
         $validated=$request->validated();
@@ -100,3 +103,54 @@ class EspecialidadController extends Controller
         return redirect()->route('especialidad.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }
+
+
+
+ function get_customer_data()
+    {
+     $customer_data = DB::table('especialidad')
+         ->limit(10)
+         ->get();
+     return $customer_data;
+    }
+
+    function pdf()
+    {
+     $pdf = \App::make('dompdf.wrapper');
+     $pdf->loadHTML($this->convert_customer_data_to_html());
+     return $pdf->stream();
+    }
+
+    function convert_customer_data_to_html()
+    {
+     $customer_data = $this->get_customer_data();
+     $output = '
+
+     <img src="images/logo.PNG" height="70" alt="SISOL" align="left" />
+
+     <img src="images/logo_colegio.png" height="70" alt="SISOL" align="right" />
+
+     <br>
+      <br>
+
+
+
+      <h3 align="center">Especialdiades registradas</h3>
+
+     <table width="100%" style="border-collapse: collapse; border: 0px;">
+      <tr>
+    <th style="border: 1px solid; padding:12px;" width="20%">Nombre</th>
+   </tr>
+     ';  
+     foreach($customer_data as $customer)
+     {
+      $output .= '
+      <tr>
+       <td style="border: 1px solid; padding:12px;">'.$customer->nombre.'</td>
+
+      </tr>
+      ';
+     }
+     $output .= '</table>';
+     return $output;
+    }

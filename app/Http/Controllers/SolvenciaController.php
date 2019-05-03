@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Solvencia;
+use App\Agremiado;
 
 class SolvenciaController extends Controller
 {
@@ -11,10 +13,11 @@ class SolvenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return view('solvencia.index');
+        //search($request->nombre)->
+        $agremiados=Agremiado::search($request->civ)->orderBy('id','ASC')->paginate(10);
+        return view('solvencia.index',compact('agremiados'));
     }
 
     /**

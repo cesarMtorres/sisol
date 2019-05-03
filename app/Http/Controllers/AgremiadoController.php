@@ -3,25 +3,44 @@
 namespace App\Http\Controllers;
 use App\Agremiado;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProyectoRequest;
+use App\Http\Requests\AgremiadoRequest;
 use App\Persona;
+use App\Especialidad;
 
 class AgremiadoController extends Controller
 {
+
+ public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
  public function index()
     {
         //
-
-        $agremiados=Agremiado::orderBy('id','ASC')->paginate(20);
-        //$agremiados=Agremiado::with('personas')->get();
-        $agremiados->each(function($agremiados){
+       // $agremiados=Agremiado::orderBy('id','ASC')->paginate(20);
+  /*      $personas=Persona::orderBy('id','ASC')->paginate(20);
+         $agremiados->each(function($agremiados){
             $agremiados->personas;
             $agremiados->especialidades;
-        });
-        return view('agremiado.index')
-        ->with('agremiados',$agremiados);
+        });*/
+        $agremiados=Agremiado::all();
+        return view('agremiado.index',compact('agremiados'));
     }
 
+
+    public function getAgremiadoxPersona(Request $request)
+    {
+        $agremiados = Agremiado::join('agremiado_persona as ap','persona.id','=',
+            'ap.agremiado_id')
+                ->select('persona.id as id',DB::raw("CONCAT(persona.apellido,' ',persona.nombre) AS alumno"),'agremiado.correo AS correo')
+                ->where('agremiado_id',$request->id)
+                ->orderBy('apellido','ASC')
+                ->get();
+
+        return $agremiados;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -30,7 +49,8 @@ class AgremiadoController extends Controller
     public function create()
     {
         //
-        return view('agremiado.create');
+        $especialidades=Especialidad::select('id','nombre')->orderBy('nombre','ASC')->get();
+        return view('agremiado.create',compact('especialidades'));
     }
 
     /**
@@ -39,12 +59,44 @@ class AgremiadoController extends Controller
      * @param  \Illuminate\Http\PruebaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PruebaRequest $request)
+    public function store(Request $request)
     {
            
-      $validated=$request->validated();
-       Agremiado::create($request->all());
-            return redirect()->route('agremiado.index')->with('success','Registro creado satisfactoriamente'); 
+      //$validated=$request->all();
+      $agremiado=new Agremiado($request->all());
+      $agremiado->save();
+    // $agremiado=Agremiado::find($request->civ);
+      $especialidades=Especialidad::find($request->especialidades);
+      $agremiado->especialidades()->attach($especialidades);
+      $persona=new Persona($request->all());
+   /*   $persona->nombre =$request->nombre;
+      $persona->cedula  =$request->cedula;
+      $persona->apellido =$request->apellido;
+      $persona->direccion =$request->direccion; 
+      $persona->telefono =$request->telefono;
+      $persona->correo =$request->correo;*/
+      $persona->save();
+      $agremiado->personas()->attach($persona);
+
+
+   /*   if($request->ajax()){
+        if(is_array($request->especialidades)){
+            foreach($request->especialidades as $especialidad){
+                if($especialidad !=null)
+                    if(!$agremiado->especialidades()->where('especialidad_id',$especialidad)->exits())
+                        $agremiado->especialidades()->attach($especialidad);
+                   return redirect()->route('agremiado.index')->with('success','Registro actualizado satisfactoriamente');
+            }
+        }else{
+            if($request->especialidades !=null)
+                if(!$agremiado->especialidades()->where('especialidad_id',$request->especialidades)->exits())
+                    $agremiado->especialidades()->attach($request->especialidades);
+                return redirect()->route('agremiado.index')->with('success','Registro actualizado satisfactoriamente');
+        }
+
+      }*/
+      // Agremiado::create($request->all());
+            return redirect()->route('agremiado.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -56,7 +108,7 @@ class AgremiadoController extends Controller
     public function show($id)
     {
         //
-        $agremiados=Agremiado::findOrFail($id);
+        $agremiados=Agremiado::where('id','=',$id)->with('personas')->with('especialidades')->get();
         return view('agremiado.show',compact('agremiados'));
     }
 
@@ -69,7 +121,7 @@ class AgremiadoController extends Controller
     public function edit($id)
     {
         //
-        $agremiados=Agremiado::findOrFail($id);
+       $agremiados=Agremiado::where('id','=',$id)->with('personas')->get();
         return view('agremiado.edit',compact('agremiados'));
     }
 
@@ -80,11 +132,14 @@ class AgremiadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PruebaRequest $Request, $id)
+    public function update(AgremiadoRequest $Request, $id)
     {
         //
         $validated=$request->validated();
+        $persona=new Persona($request->all());
+        $persona->cedula= $request->cedula;
         Agremiado::find($id)->update($request->all());
+        Persona::find($persona->cedula)->update($request->all());
         return redirect()->route('agremiado.index')->with('success','Registro actualizado satisfactoriamente');
     }
 

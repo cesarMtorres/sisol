@@ -9,9 +9,66 @@
                   <header class="panel-heading">
                               <div class="col-md-6 form-inline">
             <label>Buscar Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="">
+                  <a href="#Modal" role="button" class="btn btn-large btn-primary" data-toggle="modal" aling="left">+</a>
 
-                  <a class="mb-xs mt-xs mr-xs modal-basic btn btn-info" href="#modalBasic">Catalogo</a>
+<!--------------------------- Modal ------------------------------------------->
+          <!-- Botón en HTML (lanza el modal en Bootstrap) -->
+<!-- Modal / Ventana / Overlay en HTML -->
+<div id="Modal" class="modal fade" align="left">
+    <div class="modal-dialog" align="left" >
+        <div class="modal-content"  align="left" >
+            <div class="modal-header" align="left">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left">&times;</button>
+                <table id="mytable" class="table table-bordred table-striped" >
+             <thead>
+             <form action="" class="navbar-form pull-right" method="get">
+            <div class="input-group">
+            <tr>
+              <td>
+            <input type="text" class="form-control" name="nombre" pattern=".{0}|.{4,50}" title="Requiere minimo de (4 caracteres)" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50" required="required">
+              </td>            
+              <td>
+               <button type="submit" class="search"> <span class="input-group-addon" id="search" ><span class="fa fa-search" arial-hidden="true" id="search"> </span></span></button>
+             </td></tr>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left"></button>           
+            </div> 
+          </form> 
+          <thead>
+          <th>Seleccionar</th>
+                <th>Civ</th>
+               <th>Nombre</th>
+               <th>Apellido</th>
+             </thead>
+             <tbody>
+              @if($agremiados->count())  
+              @foreach($agremiados as $agremiado)
+              @foreach($agremiado->personas as $persona)
+              <tr>
+                <td><input id="radio" type="radio" name="civ" value="{{ $agremiado->civ }}"></td>
+                <td>{{$agremiado->civ}}</td>
+                <td>{{ $persona->nombre }}</td>
+                <td>{{ $persona->apellido }}</td>      
+                 
+               </tr>
+               @endforeach 
+               @endforeach
+               @else
+               <tr>
+                <td colspan="8">No hay registro !!</td>
+              </tr>
+              @endif
+            </tbody>
+ 
+          </table>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" data-dismiss="modal">Buscar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------------- Termina Modal ----------------------------------------->
 
                   <div id="modalBasic" class="modal-block mfp-hide">
                     <section class="panel">
@@ -148,32 +205,66 @@
                   <header class="panel-heading">
                                                   <div class="col-md-6 form-inline">
             <label>Buscar Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="">
+     <a href="#Modal2" role="button" class="btn btn-large btn-primary" data-toggle="modal" aling="left">+</a>
 
-                  <a class="mb-xs mt-xs mr-xs modal-basic btn btn-info" href="#modalBasic1">Catalogo</a>
-
-                  <div id="modalBasic1" class="modal-block mfp-hide ">
-                    <section class="panel">
-                      <header class="panel-heading">
-                        <h2 class="panel-title">Catalogo</h2>
-                      </header>
-                      <div class="panel-body">
-                        <div class="modal-wrapper">
-                          <div class="modal-text">
-                            <p>tabla</p>
-                          </div>
-                        </div>
-                      </div>
-                      <footer class="panel-footer">
-                        <div class="row">
-                          <div class="col-md-12 text-right">
-                            <button class="btn btn-primary modal-confirm">Confirm</button>
-                            <button class="btn btn-default modal-dismiss">Cancel</button>
-                          </div>
-                        </div>
-                      </footer>
-                    </section>
-                  </div>
+<!--------------------------- Modal ------------------------------------------->
+          <!-- Botón en HTML (lanza el modal en Bootstrap) -->
+<!-- Modal / Ventana / Overlay en HTML -->
+<div id="Modal2" class="modal fade" align="left">
+    <div class="modal-dialog" align="left" >
+        <div class="modal-content"  align="left" >
+            <div class="modal-header" align="left">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left">&times;</button>
+                <table id="mytable" class="table table-bordred table-striped" >
+             <thead>
+             <form action="" class="navbar-form pull-right" method="get">
+            <div class="input-group">
+            <tr>
+              <td>
+            <input type="text" class="form-control" name="nombre" pattern=".{0}|.{4,50}" title="Requiere minimo de (4 caracteres)" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50" required="required">
+              </td>            
+              <td>
+               <button type="submit" class="search"> <span class="input-group-addon" id="search" ><span class="fa fa-search" arial-hidden="true" id="search"> </span></span></button>
+             </td></tr>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left"></button>           
+            </div> 
+          </form> 
+          <thead>
+          <th>Seleccionar</th>
+                <th>Civ</th>
+               <th>Nombre</th>
+               <th>Apellido</th>
+             </thead>
+             <tbody>
+              @if($agremiados->count())  
+              @foreach($agremiados as $agremiado)
+              @foreach($agremiado->personas as $persona)
+              <tr>
+                <td><input id="radio" type="radio" name="civ" value="{{ $agremiado->civ }}"></td>
+                <td>{{$agremiado->civ}}</td>
+                <td>{{ $persona->nombre }}</td>
+                <td>{{ $persona->apellido }}</td>      
+                 
+               </tr>
+               @endforeach 
+               @endforeach
+               @else
+               <tr>
+                <td colspan="8">No hay registro !!</td>
+              </tr>
+              @endif
+            </tbody>
+ 
+          </table>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" data-dismiss="modal">Buscar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------------- Termina Modal ----------------------------------------->
 </div> 
                     <div class="panel-actions">
                       <a href="#" class="fa fa-caret-down"></a>
@@ -254,8 +345,8 @@
                   <label>Institucion</label>
                       <div class="form-inline">
                     
-                    <input type="text" name="codigo" id="codigo" class="form-control input-sm"   onkeyup="javascript:this.value=this.value.toUpperCase();" value="">
-                    <a class=" modal-basic btn btn-info" href="#catalogoInstituto">Catalogo</a>
+                    <input type="text" name="codigo" id="codigo" class="form-control input-sm" readonly="readonly" onkeyup="javascript:this.value=this.value.toUpperCase();" value="">
+                     <a href="#Modal3" role="button" class="btn btn-large btn-primary" data-toggle="modal" aling="left">+</a>
                   </div>
                 </div>
                                   <div class="col-xs-4 col-sm-4 col-md-4">
@@ -286,8 +377,7 @@
         </div>
 
       </div>
-    </div>
-<div class="row">
+      <div class="row">
   <div class="col-md-6 col-sm-6">
     <button class="btn btn-info">Atras</button>
   </div>
@@ -295,33 +385,66 @@
     <button  id="click-to-close-success"  class="btn btn-success"><span class="fa fa-print"></span> Imprimir</button>
   </div>
 </div>
+    </div>
+
                   </div>
 
                 </section>
 
+    
 
-                  <div id="catalogoInstituto" class="modal-block mfp-hide">
-                    <section class="panel">
-                      <header class="panel-heading">
-                        <h2 class="panel-title">Catalogo</h2>
-                      </header>
-                      <div class="panel-body">
-                        <div class="modal-wrapper">
-                          <div class="modal-text">
-                            <p>tabla</p>
-                          </div>
-                        </div>
-                      </div>
-                      <footer class="panel-footer">
-                        <div class="row">
-                          <div class="col-md-12 text-right">
-                            <button class="btn btn-primary modal-confirm">Aceptar</button>
-                            <button class="btn btn-default modal-dismiss">Cancelar</button>
-                          </div>
-                        </div>
-                      </footer>
-                    </section>
-                  </div>
+<!--------------------------- Modal ------------------------------------------->
+          <!-- Botón en HTML (lanza el modal en Bootstrap) -->
+<!-- Modal / Ventana / Overlay en HTML -->
+<div id="Modal3" class="modal fade" align="left">
+    <div class="modal-dialog" align="left" >
+        <div class="modal-content"  align="left" >
+            <div class="modal-header" align="left">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left">&times;</button>
+                <table id="mytable" class="table table-bordred table-striped" >
+             <thead>
+             <form action="" class="navbar-form pull-right" method="get">
+            <div class="input-group">
+            <tr>
+              <td>
+            <input type="text" class="form-control" name="nombre" pattern=".{0}|.{4,50}" title="Requiere minimo de (4 caracteres)" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50" required="required">
+              </td>            
+              <td>
+               <button type="submit" class="search"> <span class="input-group-addon" id="search" ><span class="fa fa-search" arial-hidden="true" id="search"> </span></span></button>
+             </td></tr>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" align="left"></button>           
+            </div> 
+          </form> 
+          <thead>
+            <th>Selecionar</th>
+               <th>Nombre</th>
+             </thead>
+             <tbody>
+              @if($institutos->count())  
+              @foreach($institutos as $instituto)
+              <tr>
+                <td><input id="radio" type="radio" name="id" value="{{ $instituto->id }}"></td>
+                <td>{{ $instituto->nombre }}</td>           
+               </tr>
+               @endforeach 
+               @else
+               <tr>
+                <td colspan="8">No hay registro !!</td>
+              </tr>
+              @endif
+            </tbody>
+ 
+          </table>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" data-dismiss="modal">Buscar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------------------- Termina Modal ----------------------------------------->
+
 </div>  
 
   @endsection

@@ -25,17 +25,18 @@
         <div class="panel-body">          
           <div class="table-container">
             <form method="POST" action="{{ route('especialidad.update',$especialidades->id) }}"  role="form">
-              {{ csrf_field() }}
-              <input name="_method" type="hidden" value="PATCH">
+              @csrf
+              @method('PATCH')
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$especialidades->nombre}}">
+                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" title="Requiere minimo de (6 caracteres)"  maxlength="50" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$especialidades->nombre}}">
                   </div>
                 </div>
           </div>
         </br>
+        <div id="sms"></div>
                              <div class="row">
                   <div class="col-sm-4 col-md-6">
               <a href="{{ route('especialidad.index') }}" class="btn btn-info">Atras</a>
@@ -48,4 +49,7 @@
       </div>
     </div>
   </section>
+  @endsection
+  @section('js')
+  <script type="text/javascript" src="{{ asset('js/validaciones.js') }}"></script>
   @endsection

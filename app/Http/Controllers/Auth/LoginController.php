@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,31 +27,30 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'dashboard';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct()   
     {
         $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request)
     {
-        $this->validate($request,[
-            'email' => 'required|email',
-            'password'=> 'required|min:6'
-        ]);
-        return redirect()->intended(route('app.dashboard'));
-        if (Auth::attempt(['email'=>$request->email,'password'=>$request->password],$request->remember)) {
-            
+       $credentials=$request->only('email','password');
+
+          
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+         return redirect()->intended('dashboard'); // esta linea iva arriba
         }
 
         return redirect()->back()
-        ->withInput($request->only('email','remember'));
+        ->withErrors(['email'=>'Estas credenciales no coinciden con nuestros registros'])
+        ->withInput($request->only('email','password'));
     }
 
     public function ShowLoginForm(){
@@ -57,7 +58,7 @@ class LoginController extends Controller
     }
 
     public function logout(){
-
-        return redirect()->route('login');
+        Auth::logout();
+        return redirect()->route('loginform');
     }
 }

@@ -25,7 +25,7 @@ class TipoProyectoRequest extends FormRequest
     {
         return [
             //
-            'nombre' => 'min:5|max:30|required|unique:tipo_proyecto'
+            'nombre' => 'min:5|max:50|required|unique:tipo_proyecto'
         ];
     }
 }

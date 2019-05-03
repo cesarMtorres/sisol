@@ -33,18 +33,34 @@
                 <div class="col-md-8 col-sm-8 col-xs-8">
                   <div class="form-group">
                   <label>Tipo Proyecto</label>
-                  <select>
-                    <option value="1">EDIFICIO</option>
-                    <option value="2">URBANIZACION</option>
-                    <option value="3">DEPARTAMENTO</option>
-                  </select>
+                     <select class="form-control" data-placeholder="Seleccione" style="width: 70%;" name="tipo_proyecto_id" id="tipo_proyecto_id">
+                      @if(count($tps))
+                        @foreach ($tps as $tp)
+                            <option value="{{ $tp->id }}">{{ $tp->nombre }}</option>
+                        @endforeach
+                      @else
+                        <option value="">No existen registradas</option>
+                      @endif
+                    </select>
                 </div>
                 </div>
-                <div class="col-xs-8 col-sm-8 col-md-8">
+                <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" title="Campo: Nombre" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{ old('nombre') }}">
                   </div>
+                </div>
+                  <div class="col-xs-6 col-sm-6 col-md-6">
+                    <label>institcion</label>
+                      <select class="form-control" data-placeholder="Seleccione" style="width: 70%;" name="instituto_id" id="instituto_id">
+                      @if(count($ins))
+                        @foreach ($ins as $in)
+                            <option value="{{ $in->id }}">{{ $in->nombre }}</option>
+                        @endforeach
+                      @else
+                        <option value="">No existen registradas</option>
+                      @endif
+                    </select>                   
                 </div>
 
           </div>

@@ -24,71 +24,87 @@
         </div>
         <div class="panel-body">          
           <div class="table-container">
-            <form method="POST" action="{{ route('agremiado.update',$agremiados->id) }}"  role="form">
-              {{ csrf_field() }}
+            <form method="POST" action=""  role="form">
+             @csrf
               <input name="_method" type="hidden" value="PATCH">
               <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
+                @foreach($agremiados as $agremiado)
+                @foreach($agremiado->personas as $persona)
+
+                   <div class="col-xs-4 col-sm-4 col-md-4">
+                  <label>Cedula</label>
                   <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" readonly="readonly" value="{{$agremiados->nombre}}">
+                    <input type="text" name="cedula" id="cedula" class="form-control input-sm" readonly="readonly" value="{{$persona->cedula}}">
                   </div>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                  <label>cedula</label>
+                <div class="col-xs-4 col-sm-4 col-md-4">
                   <div class="form-group">
-                    <input type="text" name="cedula" id="cedula" class="form-control input-sm" readonly="readonly" value="{{$agremiados->cedula}}">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" readonly="readonly" value="{{$persona->nombre}}">
+                  </div>
+                </div>
+
+                  <div class="col-xs-4 col-sm-4 col-md-4">
+                  <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" name="apellido" id="apellido" class="form-control input-sm" readonly="readonly" value="{{$persona->apellido}}">
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label>Direccion</label>
-                <textarea name="direccion" class="form-control input-sm" readonly="readonly"  placeholder="Resumen">{{$agremiados->direccion}}</textarea>
+                <textarea name="direccion" class="form-control input-sm" readonly="readonly"  placeholder="Resumen">{{$persona->direccion}}</textarea>
               </div>
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <label>civ</label>
-                    <input type="text" name="civ" id="civ" class="form-control input-sm"readonly="readonly"  value="{{$agremiados->civ}}">
-                  </div>
+                <div class="form-group">
+                <label>Fecha Nacimiento</label>
+                <input type="text" id="fecha_nacimiento" disabled="disabled" value="{{ $persona->fecha_nacimiento }}" class="form-control input-sm" name="fecha_nacimiento"></div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label>Especialidad</label>
-                    <input type="text" name="especialidad" id="especialidad" readonly="readonly" class="form-control input-sm" value="{{$agremiados->especialidad}}">
+                    <label>Civ</label>
+                    <input type="text" name="civ" id="civ" class="form-control input-sm"readonly="readonly"  value="{{$agremiado->civ}}">
                   </div>
                 </div>
+         <!--       <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                    <label>Especialidad</label>
+                    <input type="text" name="especialidad" id="especialidad" readonly="readonly" class="form-control input-sm" value="">
+                  </div> 
+                </div>  -->
               </div>
                  <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-4">
                   <div class="form-group">
                     <label>Codigo</label>
-                    <input type="text" name="codigo" id="codigo" readonly="readonly" class="form-control input-sm" placeholder="codigo del ing"  value="{{ $agremiados->codigo }}">
+                    <input type="text" name="codigo" id="codigo" readonly="readonly" class="form-control input-sm" placeholder="codigo del ing"  value="{{ $agremiado->codigo }}">
                   </div>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-4">
-                  <div class="form-group">
-                    <label>Solvencia</label>
-                    <input type="date" name="solvencia" id="solvencia" readonly="readonly" class="form-control input-sm" placeholder="{{ $agremiados->solvencia }}">
-                  </div>
+                <div class="input-group">
+                <label>Solvencia</label>
+                <input type="text" id="solvencia" disabled="disabled" value="{{ $agremiado->solvencia }}" class="form-control input-sm" name="solvencia"></div>
                 </div>
                   <div class="col-xs-6 col-sm-6 col-md-4">
                   <div class="form-group">
-                    <label>Estado</label>
-                    <input type="text" name="estado" id="estado" readonly="readonly" class="form-control input-sm" placeholder="estado"  value="{{ $agremiados->estado }}">
+                    <label>Correo</label>
+                    <input type="text" name="correo" id="correo" readonly="readonly" class="form-control input-sm" placeholder="correo"  value="{{ $persona->correo }}">
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label>Trabajo</label>
-                <textarea name="trabajo" class="form-control input-sm" readonly="readonly" placeholder="Autor">{{$agremiados->trabajo}}</textarea>
+                <textarea name="trabajo" class="form-control input-sm" readonly="readonly" placeholder="Autor">{{$agremiado->trabajo}}</textarea>
               </div>
               <div class="row">
                     <a href="{{ route('agremiado.index') }}" class="btn btn-info">Atras</a>
-                   <a href="{{ action('AgremiadoController@edit',$agremiados->id) }}" class="btn btn-success">Editar</a>
+                   <a href="{{ action('AgremiadoController@edit',$agremiado->id) }}" class="btn btn-success">Editar</a>
 
               </div>
+              @endforeach
+              @endforeach
             </form>
           </div>
         </div>
@@ -97,3 +113,10 @@
     </div>
   </section>
   @endsection
+
+  <script type="text/javascript">
+      $('#solvencia').datepicker({
+      format:'yyyy-mm-dd',
+      autoclose: true
+    });
+</script>

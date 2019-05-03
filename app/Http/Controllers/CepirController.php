@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Agremiado;
+use App\Instituto;
 class CepirController extends Controller
 {
     /**
@@ -11,10 +12,12 @@ class CepirController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return view('cepir.index');
+        // search($request->nombre)->
+        $institutos=Instituto::orderBy('id','ASC')->paginate(20);
+        $agremiados=Agremiado::search($request->civ)->orderBy('id','ASC')->paginate(10);
+        return view('cepir.index',compact('agremiados','institutos'));
     }
 
     /**

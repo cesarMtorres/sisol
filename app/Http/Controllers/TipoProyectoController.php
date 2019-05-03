@@ -12,10 +12,10 @@ class TipoProyectoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tproyectos=TipoProyecto::OrderBy('id','ASC')->paginate(20);
+        $tproyectos=TipoProyecto::search($request->nombre)->OrderBy('id','ASC')->paginate(20);
         return view('tproyecto.index',compact('tproyectos'));
     }
 

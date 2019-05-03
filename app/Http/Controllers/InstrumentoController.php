@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Instrumento;
 use App\InstrumentoClasificacion;
+use App\Http\Requests\IntrumentoRequest;
 
 class InstrumentoController extends Controller
 {
@@ -13,12 +14,12 @@ class InstrumentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
-        $baremos=Instrumento::orderBy('id','ASC')->paginate(20);
-        return view('baremo.index',compact('baremos'));
+        $instrumentos=Instrumento::search($request->nombre)->orderBy('id','ASC')->paginate(20);
+        return view('baremo.index',compact('instrumentos'));
     }
 
     /**
@@ -40,9 +41,12 @@ class InstrumentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IntrumentoRequest $request)
     {
         //
+    $instrumento= new Instrumento($request->all());
+    $instrumento->save();
+    return redirect()->route('baremo.index')->with('success','Registro creado satisfactoriamente'); 
     }
 
     /**
@@ -54,6 +58,8 @@ class InstrumentoController extends Controller
     public function show($id)
     {
         //
+        $instrumentos=Instrumento::where('id','=',$id)->with('instrumentoclasificion')->get();
+        return view('baremo.show',compact('instrumentos'));
     }
 
     /**
@@ -65,6 +71,8 @@ class InstrumentoController extends Controller
     public function edit($id)
     {
         //
+        $instrumentos=Instrumento::findOrFail($id);
+        return view('baremo.edit',compact('instrumentos'));
     }
 
     /**
@@ -88,5 +96,7 @@ class InstrumentoController extends Controller
     public function destroy($id)
     {
         //
+        Instrumento::find($id)->delete();
+        return redirect()->route('baremo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

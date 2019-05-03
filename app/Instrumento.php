@@ -11,4 +11,13 @@ class Instrumento extends Model
     protected $table="instrumento";
     protected $dates=['daleted_at'];
     protected $fillable=["nombre","descripcion","clasificacion_id"];
+
+    public function instrumentoclasificion(){
+    	$this->hasMany('App\InstrumentoClasificacion');
+    }
+
+
+    public function scopeSearch($query,$nombre){
+   	return $query->where('nombre','LIKE',"%$nombre%");
+   }
 }

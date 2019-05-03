@@ -1,6 +1,6 @@
 @extends('layouts.layout')
-@section('panel_name','Tipo Proyecto')
-@section('panel_rigth','TipoProyecto')
+@section('panel_name','Motivo')
+@section('panel_rigth','Motivo')
 @section('content')
   <section class="content">
     <div class="col">
@@ -22,7 +22,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Tipo Proyecto</h3>
+          <h3 class="panel-title">Motivo</h3>
         </div>
         <div class="panel-body">          
           <div class="table-container">

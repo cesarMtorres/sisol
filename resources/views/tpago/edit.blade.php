@@ -28,18 +28,19 @@
         <div class="panel-body">          
           <div class="table-container">
             <form method="POST" action="{{ route('tpago.update',$tpagos->id) }}"  role="form">
-              {{ csrf_field() }}
+              @csrf
           <!--    <input name="_method" type="hidden" value="PATCH"> -->
               @method('PATCH')
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
                   <div class="form-group">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" onkeyup="javascript:this.value=this.value.toUpperCase();" value="{{$tpagos->nombre}}">
+                    <input type="text" name="nombre" id="nombre" class="form-control input-sm" pattern=".{0}|.{4,50}" title="Requiere minimo de (4 caracteres)" OnkeyPress="return SoloLetras(event)" onkeyup="javascript:this.value=this.value.toUpperCase();" maxlength="50" required="required" value="{{$tpagos->nombre}}">
                   </div>
                 </div>
           </div>
         </br>
+        <div id="sms"></div>
                              <div class="row">
                   <div class="col-sm-4 col-md-6">
               <a href="{{ route('tpago.index') }}" class="btn btn-info">Atras</a>
@@ -53,3 +54,6 @@
     </div>
   </section>
   @endsection
+    @section('js')
+<script type="text/javascript" src="{{ asset('js/validaciones.js') }}"></script>
+  @endsection  

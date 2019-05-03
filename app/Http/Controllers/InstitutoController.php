@@ -15,7 +15,8 @@ class InstitutoController extends Controller
     public function index(Request $request)
     {
         //
-        $institutos=Instituto::search($request->name)->OrderBy('id','ASC')->paginate(20);
+        
+        $institutos=Instituto::search($request->nombre)->OrderBy('id','ASC')->paginate(20);
         return view('instituto.index',compact('institutos'));
     }
 
@@ -71,7 +72,7 @@ class InstitutoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage. 
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -98,3 +99,4 @@ class InstitutoController extends Controller
         return redirect()->route('instituto.index')->with('success','Registro eliminado satisfactoriamente');        
     }
 }
+

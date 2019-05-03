@@ -14,10 +14,10 @@ class ConfiguracionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $configuraciones=Configuracion::OrderBy('id','ASC')->paginate(20);
+        $configuraciones=Configuracion::search($request->nombre)->OrderBy('id','ASC')->paginate(10);
         return view('configuracion.index',compact('configuraciones'));
     }
 
