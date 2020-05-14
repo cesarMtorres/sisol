@@ -1,0 +1,17 @@
+
+Laravel Eloquent: is SQL injection prevention done automatically?
+
+
+Yes, but...
+
+Yes, it does SQL injection prevention when you rely on the built-in ORM functionality, like $someModelInstance->save(). From the docs:
+
+    Laravel's database query builder provides a convenient, fluent interface to creating and running database queries. It can be used to perform most database operations in your application and works on all supported database systems.
+
+    The Laravel query builder uses PDO parameter binding to protect your application against SQL injection attacks. There is no need to clean strings being passed as bindings.
+
+Please note that you are not automatically protected if you build raw SQL statements and execute those or use raw expressions. More from the docs:
+
+    Raw statements will be injected into the query as strings, so you should be extremely careful to not create SQL injection vulnerabilities.
+
+You should always use parameterized queries when building raw SQL statements or expressions. See the last link above (and other parts of the docs, as wel) for information on how to do that in Laravel/Eloquent.
